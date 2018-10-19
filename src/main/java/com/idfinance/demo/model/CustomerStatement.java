@@ -7,6 +7,14 @@ import java.util.Date;
 @Table(name = "customer_statement")
 public class CustomerStatement {
 
+    public CustomerStatement(String request, float bid, Date dueDate) {
+        this.request = request;
+        this.bid = bid;
+        this.dueDate = dueDate;
+    }
+
+    public CustomerStatement(){}
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private  long id;
@@ -15,19 +23,9 @@ public class CustomerStatement {
 
     private  float bid;
 
-    private Date due_date;
+    private Date dueDate;
 
     private  Boolean status = false;
-
-    public CustomerStatement(String request, float bid, Date due_date) {
-        this.id = id;
-        this.request = request;
-        this.bid = bid;
-        this.due_date = due_date;
-        this.status = status;
-    }
-
-    public CustomerStatement(){}
 
     public long getId() {
         return id;
@@ -53,12 +51,12 @@ public class CustomerStatement {
         this.bid = bid;
     }
 
-    public Date getDue_date() {
-        return due_date;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setDue_date(Date due_date) {
-        this.due_date = due_date;
+    public void setDueDate(Date due_date) {
+        this.dueDate = due_date;
     }
 
     public Boolean getStatus() {

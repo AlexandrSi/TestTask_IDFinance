@@ -1,13 +1,16 @@
 package com.idfinance.demo.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "customer_statement")
 public class CustomerStatement {
 
-    public CustomerStatement(String request, float bid, Date dueDate) {
+    public CustomerStatement(String request, BigDecimal bid, Date dueDate) {
         this.request = request;
         this.bid = bid;
         this.dueDate = dueDate;
@@ -17,21 +20,22 @@ public class CustomerStatement {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private  long id;
+    private  int id;
 
     private  String request;
 
-    private  float bid;
+    private BigDecimal bid;
 
+    @Type(type = "date")
     private Date dueDate;
 
     private  Boolean status = false;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -43,11 +47,11 @@ public class CustomerStatement {
         this.request = request;
     }
 
-    public float getBid() {
+    public BigDecimal getBid() {
         return bid;
     }
 
-    public void setBid(float bid) {
+    public void setBid(BigDecimal bid) {
         this.bid = bid;
     }
 
@@ -55,8 +59,8 @@ public class CustomerStatement {
         return dueDate;
     }
 
-    public void setDueDate(Date due_date) {
-        this.dueDate = due_date;
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public Boolean getStatus() {

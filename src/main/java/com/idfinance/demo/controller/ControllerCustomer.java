@@ -7,9 +7,11 @@ import com.idfinance.demo.repository.CustomerRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +34,11 @@ public class ControllerCustomer {
           JsonNode rootNode = mapper.readValue(customStmt, JsonNode.class);
           CustomerStatement customerStatement = new CustomerStatement();
           customerStatement.setRequest(rootNode.get("request").asText());
-          customerStatement.setBid(rootNode.get("bid").floatValue());
+
+          String bidStr = rootNode.get("bid").asText();
+          BigDecimal bigBit = new BigDecimal(bidStr);
+          customerStatement.setBid(bigBit);
+
           String dateStr =  rootNode.get("due_date").asText();
           String pattern = "yyyy-MM-dd";
           SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -44,20 +50,28 @@ public class ControllerCustomer {
     }
 
     @RequestMapping (value = "/checkStatus", method = RequestMethod.GET)
-    public String checkStatus(@RequestParam(value = "json") String customStmt) throws IOException, ParseException {
+    public String checkStatus(@RequestParam(value = "json") String customStmt, Model model) throws IOException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readValue(customStmt, JsonNode.class);
         CustomerStatement customerStatement = new CustomerStatement();
         customerStatement.setRequest(rootNode.get("request").asText());
-        customerStatement.setBid(rootNode.get("bid").floatValue());
+
+        String bidStr = rootNode.get("bid").asText();
+        BigDecimal bigBit = new BigDecimal(bidStr);
+        customerStatement.setBid(bigBit);
+
         String dateStr =  rootNode.get("due_date").asText();
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         Date date = simpleDateFormat.parse(dateStr);
         customerStatement.setDueDate(date);
 
-        List<CustomerStatement> controllerCustomers = customerRepo.findByRequestAndBidAndDueDate(customerStatement.getRequest(),
-                customerStatement.getBid(), customerStatement.getDueDate());
+        List<CustomerStatement> cstList = customerRepo.findByRequestAndBidAndDueDate(customerStatement.getRequest(),
+        customerStatement.getBid(), customerStatement.getDueDate());
+        customerStatement.setStatus(cstList.get(0).getStatus());
+        customerStatement.setId(cstList.get(0).getId());
+        model.addAttribute("customer", customerStatement.getStatus());
+        model.addAttribute("id", customerStatement.getId());
         return "customer";
     }
 }

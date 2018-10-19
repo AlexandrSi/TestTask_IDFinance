@@ -12,5 +12,7 @@
     <p><input type="submit" formaction="/sendStmt"></p>
     <p><input type="submit" formaction="/checkStatus" value="Статус"></p>
 </form>
+<c:out value="${customer}"></c:out>
+<c:out value="${id}"></c:out>
 </body>
 </html>

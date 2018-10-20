@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public interface CustomerRepo extends CrudRepository<CustomerStatement, Long> {
+public interface CustomerRepo extends CrudRepository<CustomerStatement, Integer> {
 
    List<CustomerStatement> findByRequestAndBidAndDueDate(String request, BigDecimal bid, Date dueDate);
+
 }

@@ -29,7 +29,7 @@ public class CustomerStatement {
     @Type(type = "date")
     private Date dueDate;
 
-    private  Boolean status = false;
+    private  String status = "Considered";
 
     public int getId() {
         return id;
@@ -63,11 +63,11 @@ public class CustomerStatement {
         this.dueDate = dueDate;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

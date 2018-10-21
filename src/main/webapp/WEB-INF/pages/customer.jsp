@@ -3,7 +3,7 @@
          pageEncoding="UTF-8"%>
 <html>
 <head>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
@@ -13,6 +13,5 @@
     <p><input type="submit" formaction="/checkStatus" value="Статус"></p>
 </form>
 <c:out value="${customer}"/>
-<c:out value="${id}"/>
 </body>
 </html>
